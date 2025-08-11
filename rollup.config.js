@@ -25,7 +25,8 @@ export default {
     commonjs(),
     typescript({
       tsconfig: './tsconfig.json',
+      importHelpers: true, // Usa tslib en lugar de helpers inline 
     }),
   ],
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'tslib'], // Externaliza tslib
 };

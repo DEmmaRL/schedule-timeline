@@ -2,7 +2,7 @@
 
 A flexible and customizable schedule timeline component for React applications. Perfect for displaying event schedules, daily agendas, conference programs, and more.
 
-Originally created for TCMX 2025 (Taller de Ciencias de la Computación México), this component has been generalized to work with any type of schedule or timeline.
+Originally created for and inspired by the ICPC TCMX 2025, this component has been generalized to work with any type of schedule or timeline.
 
 ## Features
 
@@ -59,13 +59,15 @@ const MySchedule = () => {
 This project includes a development app for testing and visualizing the component:
 
 ```bash
-# 1. Build the library
-npm run build
+# Option 1: Using the convenience script
+./dev.sh
 
-# 2. Run the development app
-cd dev-app
-npm install
-npm run dev
+# Option 2: Manual steps
+npm run build           # Build the library
+cd dev-app && npm install && npm run dev
+
+# Option 3: Using npm scripts
+npm run dev-app         # Builds library and starts dev-app
 ```
 
 Open `http://localhost:5173/` to see interactive examples with:
@@ -74,11 +76,20 @@ Open `http://localhost:5173/` to see interactive examples with:
 - Interactive event handlers
 - Custom renderers
 
+### Development Workflow
+
+When making changes to the library:
+
+1. **Edit source files** in `src/`
+2. **Rebuild the library**: `npm run build`
+3. **Dev-app updates automatically** (thanks to Vite's hot reload)
+
 ### Running Tests
 
 ```bash
 npm test              # Run tests
 npm run test:coverage # Run tests with coverage
+npm run test:watch    # Run tests in watch mode
 ```
 
 ## Advanced Configuration
@@ -138,7 +149,7 @@ const CustomSchedule = () => {
 ```
 
 ## API Reference
-
+//TODO
 ### ScheduleTimelineProps
 
 | Prop | Type | Default | Description |

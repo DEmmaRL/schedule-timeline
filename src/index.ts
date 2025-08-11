@@ -1,4 +1,7 @@
-export { ScheduleTimeline as default, ScheduleTimeline } from './ScheduleTimeline';
+// Main component export
+export { ScheduleTimeline } from './ScheduleTimeline';
+
+// Type exports
 export type {
   Activity,
   DaySchedule,

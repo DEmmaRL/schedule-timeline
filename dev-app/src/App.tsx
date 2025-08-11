@@ -12,7 +12,6 @@ const App = () => {
       createActivity('12:00 - 13:00', 'Lunch Break', 'break'),
       createActivity('13:00 - 15:00', 'Technical Talks', 'theory'),
       createActivity('15:00 - 15:30', 'Coffee Break', 'break'),
-      createActivity('15:30 - 17:00', 'Panel Discussion', 'discussion'),
     ]),
     createDaySchedule('22', 'Friday', [
       createActivity('9:00 - 11:00', 'Competition', 'contest'),
@@ -66,7 +65,7 @@ const App = () => {
 
   const advancedConfig = {
     startHour: 8,
-    endHour: 20,
+    endHour: 11 ,
     pixelsPerMinute: 3,
     showTimeMarkers: true,
     timeMarkerInterval: 30,

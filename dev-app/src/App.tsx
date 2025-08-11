@@ -4,7 +4,7 @@ import { ScheduleTimeline, createDaySchedule, createActivity, colorThemes } from
 const App = () => {
   const [selectedExample, setSelectedExample] = useState('basic');
 
-  // Ejemplo básico del README
+  // Basic example from README
   const basicSchedule = [
     createDaySchedule('21', 'Thursday', [
       createActivity('9:00 - 10:00', 'Opening Ceremony', 'opening'),
@@ -21,7 +21,7 @@ const App = () => {
     ]),
   ];
 
-  // Ejemplo de conferencia
+  // Conference example
   const conferenceSchedule = [
     createDaySchedule('15', 'Monday', [
       createActivity('8:00 - 9:00', 'Registration & Coffee', 'registration'),
@@ -86,7 +86,7 @@ const App = () => {
           Schedule Timeline Component Demo
         </h1>
         
-        {/* Selector de ejemplos */}
+        {/* Example selector */}
         <div className="mb-8">
           <div className="flex gap-4 mb-4">
             <button
@@ -97,7 +97,7 @@ const App = () => {
                   : 'bg-white text-gray-700 border'
               }`}
             >
-              Ejemplo Básico
+              Basic Example
             </button>
             <button
               onClick={() => setSelectedExample('conference')}
@@ -107,7 +107,7 @@ const App = () => {
                   : 'bg-white text-gray-700 border'
               }`}
             >
-              Conferencia
+              Conference
             </button>
             <button
               onClick={() => setSelectedExample('themed')}
@@ -117,7 +117,7 @@ const App = () => {
                   : 'bg-white text-gray-700 border'
               }`}
             >
-              Con Tema Personalizado
+              Custom Theme
             </button>
             <button
               onClick={() => setSelectedExample('custom')}
@@ -127,16 +127,16 @@ const App = () => {
                   : 'bg-white text-gray-700 border'
               }`}
             >
-              Renderer Personalizado
+              Custom Renderer
             </button>
           </div>
         </div>
 
-        {/* Contenedor del timeline */}
+        {/* Timeline container */}
         <div className="bg-white rounded-lg shadow-lg p-6">
           {selectedExample === 'basic' && (
             <div>
-              <h2 className="text-xl font-semibold mb-4">Ejemplo Básico</h2>
+              <h2 className="text-xl font-semibold mb-4">Basic Example</h2>
               <ScheduleTimeline
                 schedule={basicSchedule}
                 onActivityClick={handleActivityClick}
@@ -147,7 +147,7 @@ const App = () => {
 
           {selectedExample === 'conference' && (
             <div>
-              <h2 className="text-xl font-semibold mb-4">Conferencia</h2>
+              <h2 className="text-xl font-semibold mb-4">Conference</h2>
               <ScheduleTimeline
                 schedule={conferenceSchedule}
                 config={advancedConfig}
@@ -159,7 +159,7 @@ const App = () => {
 
           {selectedExample === 'themed' && (
             <div>
-              <h2 className="text-xl font-semibold mb-4">Con Tema Personalizado</h2>
+              <h2 className="text-xl font-semibold mb-4">Custom Theme</h2>
               <ScheduleTimeline
                 schedule={conferenceSchedule}
                 config={advancedConfig}
@@ -172,7 +172,7 @@ const App = () => {
 
           {selectedExample === 'custom' && (
             <div>
-              <h2 className="text-xl font-semibent mb-4">Renderer Personalizado</h2>
+              <h2 className="text-xl font-semibold mb-4">Custom Renderer</h2>
               <ScheduleTimeline
                 schedule={basicSchedule}
                 customActivityRenderer={customRenderer}
@@ -183,16 +183,16 @@ const App = () => {
           )}
         </div>
 
-        {/* Información adicional */}
+        {/* Additional information */}
         <div className="mt-8 bg-blue-50 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">
-            Instrucciones
+            Instructions
           </h3>
           <ul className="text-blue-800 space-y-1">
-            <li>• Haz clic en cualquier actividad para ver un alert</li>
-            <li>• Pasa el mouse sobre las actividades para ver logs en la consola</li>
-            <li>• Cambia entre los diferentes ejemplos usando los botones</li>
-            <li>• Abre las herramientas de desarrollador para ver los logs de hover</li>
+            <li>• Click on any activity to see an alert</li>
+            <li>• Hover over activities to see logs in the console</li>
+            <li>• Switch between different examples using the buttons</li>
+            <li>• Open developer tools to see hover logs</li>
           </ul>
         </div>
       </div>

@@ -1,40 +1,40 @@
 # Development App
 
-Esta es una aplicación de desarrollo para probar y visualizar el componente Schedule Timeline de forma interactiva.
+This is a development application for testing and visualizing the Schedule Timeline component interactively.
 
-## Uso
+## Usage
 
-Desde el directorio raíz del proyecto:
+From the project root directory:
 
 ```bash
-# 1. Compilar la librería
+# 1. Build the library
 npm run build
 
-# 2. Instalar dependencias de dev-app (solo la primera vez)
+# 2. Install dev-app dependencies (only first time)
 cd dev-app && npm install
 
-# 3. Ejecutar la aplicación de desarrollo
+# 3. Run the development application
 npm run dev
 ```
 
-## Características
+## Features
 
-- **4 Ejemplos interactivos**: Básico, Conferencia, Tema personalizado, y Renderer personalizado
-- **Eventos interactivos**: Click y hover en actividades
-- **Diseño responsivo**: Funciona en desktop y móvil
-- **Hot reload**: Los cambios se reflejan automáticamente
+- **4 Interactive Examples**: Basic, Conference, Custom Theme, and Custom Renderer
+- **Interactive Events**: Click and hover on activities
+- **Responsive Design**: Works on desktop and mobile
+- **Hot Reload**: Changes are reflected automatically
 
-## Ejemplos incluidos
+## Included Examples
 
-1. **Ejemplo Básico**: Horario simple con actividades de TCMX
-2. **Conferencia**: Horario más complejo con múltiples tipos de actividades
-3. **Tema Personalizado**: Colores personalizados para diferentes tipos
-4. **Renderer Personalizado**: Diseño completamente personalizado con iconos
+1. **Basic Example**: Simple schedule with TCMX activities
+2. **Conference**: More complex schedule with multiple activity types
+3. **Custom Theme**: Custom colors for different types
+4. **Custom Renderer**: Completely custom design with icons
 
-## Desarrollo
+## Development
 
-Para hacer cambios en la librería:
+To make changes to the library:
 
-1. Modifica los archivos en `../src/`
-2. Ejecuta `npm run build` desde el directorio raíz
-3. La dev-app se actualizará automáticamente
+1. Modify files in `../src/`
+2. Run `npm run build` from the root directory
+3. The dev-app will update automatically

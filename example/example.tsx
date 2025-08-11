@@ -4,25 +4,25 @@ import { ScheduleTimeline, createDaySchedule, createActivity, colorThemes } from
 // Example 1: Basic usage with your original TCMX data
 const TCMXExample = () => {
   const schedule = [
-    createDaySchedule('21', 'Jueves', [
-      createActivity('8:00 - 9:00', 'Registro y entrega de kits', 'registration'),
-      createActivity('9:00 - 9:20', 'Inauguración', 'opening'),
-      createActivity('9:20 - 13:00', 'Sesión teórica + actividades', 'theory'),
-      createActivity('13:00 - 14:30', 'Break para comer', 'break'),
-      createActivity('14:30 - 19:30', 'Concurso', 'contest'),
+    createDaySchedule('21', 'Thursday', [
+      createActivity('8:00 - 9:00', 'Registration and kit delivery', 'registration'),
+      createActivity('9:00 - 9:20', 'Opening Ceremony', 'opening'),
+      createActivity('9:20 - 13:00', 'Theoretical session + activities', 'theory'),
+      createActivity('13:00 - 14:30', 'Lunch Break', 'break'),
+      createActivity('14:30 - 19:30', 'Contest', 'contest'),
     ]),
-    createDaySchedule('22', 'Viernes', [
-      createActivity('9:00 - 10:45', 'Sesión teórica', 'theory'),
+    createDaySchedule('22', 'Friday', [
+      createActivity('9:00 - 10:45', 'Theoretical Session', 'theory'),
       createActivity('10:45 - 11:15', 'Coffee Break', 'break'),
       createActivity('11:15 - 13:00', 'Upsolving', 'upsolving'),
-      createActivity('13:00 - 14:30', 'Break para comer', 'break'),
-      createActivity('14:30 - 19:30', 'Concurso', 'contest'),
+      createActivity('13:00 - 14:30', 'Lunch Break', 'break'),
+      createActivity('14:30 - 19:30', 'Contest', 'contest'),
     ]),
-    createDaySchedule('23', 'Sábado', [
+    createDaySchedule('23', 'Saturday', [
       createActivity('9:00 - 10:30', 'Chill time', 'chill'),
       createActivity('10:30 - 11:00', 'Coffee Break', 'break'),
-      createActivity('11:00 - 16:00', 'Tercera fecha ICPC', 'icpc'),
-      createActivity('16:00 - 19:30', 'Coffee and chill (Discusión sobre la tercera fecha)', 'chill'),
+      createActivity('11:00 - 16:00', 'ICPC Third Date', 'icpc'),
+      createActivity('16:00 - 19:30', 'Coffee and chill (Discussion about the third date)', 'chill'),
     ]),
   ];
 

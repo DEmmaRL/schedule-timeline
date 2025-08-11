@@ -205,7 +205,7 @@ The component uses Tailwind CSS classes by default, but you can override styles 
 
 ## License
 
-MIT
+Apache-2.0
 
 ## Contributing
 

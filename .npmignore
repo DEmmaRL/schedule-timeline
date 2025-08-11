@@ -1,0 +1,33 @@
+# Source files
+src/
+example/
+
+# Development files
+.gitignore
+tsconfig.json
+rollup.config.js
+*.md
+!README.md
+
+# Dependencies
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test files
+**/*.test.*
+**/*.spec.*
+coverage/
+
+# Development dependencies
+.eslintrc.*
+.prettierrc.*

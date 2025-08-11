@@ -14,8 +14,12 @@
     "dev": "rollup -c -w",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "eslint src --ext .ts,.tsx",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "dev-app": "npm run build && cd dev-app && npm run dev",
+    "dev-app:install": "cd dev-app && npm install",
+    "dev-app:build": "cd dev-app && npm run build"
   },
   "keywords": [
     "react",

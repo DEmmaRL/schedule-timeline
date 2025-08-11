@@ -13,13 +13,15 @@ Originally created for TCMX 2025 (Taller de Ciencias de la Computación México)
 - 🎯 **Interactive**: Click and hover event handlers for activities
 - 🔧 **Highly configurable**: Extensive configuration options for different use cases
 
-## Installation
+## Quick Start
+
+### Installation
 
 ```bash
 npm install @demmarl/schedule-timeline
 ```
 
-## Basic Usage
+### Basic Usage
 
 ```tsx
 import React from 'react';
@@ -48,6 +50,35 @@ const MySchedule = () => {
     />
   );
 };
+```
+
+## Development & Testing
+
+### Interactive Development App
+
+This project includes a development app for testing and visualizing the component:
+
+```bash
+# 1. Build the library
+npm run build
+
+# 2. Run the development app
+cd dev-app
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173/` to see interactive examples with:
+- Multiple schedule configurations
+- Different themes and styling options
+- Interactive event handlers
+- Custom renderers
+
+### Running Tests
+
+```bash
+npm test              # Run tests
+npm run test:coverage # Run tests with coverage
 ```
 
 ## Advanced Configuration

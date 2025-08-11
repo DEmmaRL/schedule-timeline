@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+dev-app/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -7,6 +8,7 @@ yarn-error.log*
 # Build outputs
 dist/
 build/
+dev-app/dist/
 *.tsbuildinfo
 
 # Environment variables
@@ -37,3 +39,7 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+# Vite cache
+dev-app/.vite/
+.cache/

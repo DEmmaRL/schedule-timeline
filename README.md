@@ -273,6 +273,75 @@ const handleEventClick = async (event: Event) => {
 };
 ```
 
+## ICS Standard Support
+
+The library includes built-in support for the ICS (iCalendar) standard, making it easy to import/export calendar data that works with Google Calendar, Outlook, Apple Calendar, and more.
+
+### Export to ICS
+
+```tsx
+import { downloadICS, eventsToICS } from '@demmarl/schedule-timeline';
+
+const MySchedule = () => {
+  const events = [/* your events */];
+
+  const exportToCalendar = () => {
+    // Download as .ics file
+    downloadICS(events, 'my-schedule.ics', 'My Event Schedule');
+  };
+
+  const getICSContent = () => {
+    // Get ICS content as string (for API calls, etc.)
+    const icsContent = eventsToICS(events, 'My Calendar');
+    return icsContent;
+  };
+
+  return (
+    <div>
+      <ScheduleTimeline events={events} />
+      <button onClick={exportToCalendar}>
+        Add to Calendar
+      </button>
+    </div>
+  );
+};
+```
+
+### Import from ICS
+
+```tsx
+import { loadICSFile, icsToEvents } from '@demmarl/schedule-timeline';
+
+const ImportExample = () => {
+  const [events, setEvents] = useState([]);
+
+  const handleFileImport = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const importedEvents = await loadICSFile(file);
+        setEvents(prev => [...prev, ...importedEvents]);
+      } catch (error) {
+        console.error('Import failed:', error);
+      }
+    }
+  };
+
+  const handleICSContent = (icsContent: string) => {
+    // Parse ICS content from API, clipboard, etc.
+    const events = icsToEvents(icsContent);
+    setEvents(events);
+  };
+
+  return (
+    <div>
+      <input type="file" accept=".ics" onChange={handleFileImport} />
+      <ScheduleTimeline events={events} />
+    </div>
+  );
+};
+```
+
 ## Advanced Configuration
 
 ```tsx

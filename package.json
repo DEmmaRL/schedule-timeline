@@ -71,7 +71,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DEmmaRL/schedule-timeline.git"
+    "url": "git+https://github.com/DEmmaRL/schedule-timeline.git"
   },
   "bugs": {
     "url": "https://github.com/DEmmaRL/schedule-timeline/issues"

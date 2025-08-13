@@ -7,10 +7,10 @@ const App = () => {
   // Basic example from README
   const basicSchedule = [
     createDaySchedule('21', 'Thursday', [
-      createActivity('9:00 - 10:00', 'Opening Ceremony', 'opening'),
-      createActivity('10:00 - 12:00', 'Workshop Session', 'theory'),
-      createActivity('12:00 - 13:00', 'Lunch Break', 'break'),
-      createActivity('13:00 - 15:00', 'Technical Talks', 'theory'),
+      createActivity('9:20 - 10:50', 'Opening Ceremony', 'opening'),
+      createActivity('10:55 - 12:55', 'Workshop Session', 'theory'),
+      createActivity('13:00 - 14:20', 'Lunch Break', 'break'),
+      createActivity('14:30 - 15:00', 'Technical Talks', 'theory'),
       createActivity('15:00 - 15:30', 'Coffee Break', 'break'),
     ]),
     createDaySchedule('22', 'Friday', [
@@ -18,6 +18,18 @@ const App = () => {
       createActivity('11:00 - 11:30', 'Coffee Break', 'break'),
       createActivity('11:30 - 13:00', 'Awards Ceremony', 'closing'),
       createActivity('13:00 - 14:00', 'Networking Lunch', 'networking'),
+    ]),
+    createDaySchedule('23', 'Saturday', [
+      createActivity('10:00 - 15:00', 'Hiking', 'contest'),
+    ]),
+    createDaySchedule('24', 'Sunday', [
+    ]),
+    createDaySchedule('25', 'Monday', [
+      createActivity('9:20 - 10:50', 'Opening Ceremony', 'opening'),
+      createActivity('10:55 - 12:55', 'Workshop Session', 'theory'),
+      createActivity('13:00 - 14:20', 'Lunch Break', 'break'),
+      createActivity('14:30 - 15:00', 'Technical Talks', 'theory'),
+      createActivity('15:00 - 15:30', 'Coffee Break', 'break'),
     ]),
   ];
 
@@ -181,19 +193,6 @@ const App = () => {
               />
             </div>
           )}
-        </div>
-
-        {/* Additional information */}
-        <div className="mt-8 bg-blue-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-2">
-            Instructions
-          </h3>
-          <ul className="text-blue-800 space-y-1">
-            <li>• Click on any activity to see an alert</li>
-            <li>• Hover over activities to see logs in the console</li>
-            <li>• Switch between different examples using the buttons</li>
-            <li>• Open developer tools to see hover logs</li>
-          </ul>
         </div>
       </div>
     </div>

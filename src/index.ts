@@ -1,5 +1,6 @@
-// Main component export
+// Main component exports
 export { ScheduleTimeline } from './ScheduleTimeline';
+export { ScheduleManager } from './components/ScheduleManager';
 
 // Type exports
 export type {
@@ -10,6 +11,30 @@ export type {
   ScheduleTimelineProps,
   TimeMarker,
 } from './types';
+
+// Database integration types
+export type {
+  DatabaseActivity,
+  DatabaseSchedule,
+} from './utils/dataUtils';
+
+export type {
+  ScheduleDataHookOptions,
+  ScheduleDataHook
+} from './hooks/useScheduleData';
+
+export type { ScheduleManagerProps } from './components/ScheduleManager';
+
+// Hook exports
+export { useScheduleData } from './hooks/useScheduleData';
+
+// Data utility exports
+export { 
+  convertDatabaseToSchedule, 
+  convertScheduleToDatabase, 
+  exportToICS, 
+  parseICSToSchedule 
+} from './utils/dataUtils';
 
 // Utility functions that users might find helpful
 export const createActivity = (

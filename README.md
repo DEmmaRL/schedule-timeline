@@ -12,6 +12,10 @@ Originally created for and inspired by the ICPC TCMX 2025, this component has be
 - ⚡ **TypeScript support**: Full TypeScript support with comprehensive type definitions
 - 🎯 **Interactive**: Click and hover event handlers for activities
 - 🔧 **Highly configurable**: Extensive configuration options for different use cases
+- 🗄️ **Database integration**: Built-in support for loading/saving schedule data
+- 📋 **ICS support**: Import and export standard calendar files (.ics)
+- 🔄 **Auto-save**: Automatic data persistence with configurable intervals
+- ✏️ **Editable**: Built-in editing capabilities with the ScheduleManager component
 
 ## Demo
 
@@ -94,6 +98,139 @@ When making changes to the library:
 npm test              # Run tests
 npm run test:coverage # Run tests with coverage
 npm run test:watch    # Run tests in watch mode
+```
+
+## Database Integration & ICS Support
+
+### Using ScheduleManager with Database
+
+```tsx
+import { ScheduleManager, DatabaseSchedule } from '@demmarl/schedule-timeline';
+
+const MyApp = () => {
+  const loadFromDatabase = async (): Promise<DatabaseSchedule> => {
+    const response = await fetch('/api/schedule');
+    return response.json();
+  };
+
+  const saveToDatabase = async (data: DatabaseSchedule): Promise<void> => {
+    await fetch('/api/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  };
+
+  return (
+    <ScheduleManager
+      dataOptions={{
+        loadFromDatabase,
+        saveToDatabase,
+        autoSave: true,
+        autoSaveInterval: 30000, // Auto-save every 30 seconds
+      }}
+      showEditControls={true}
+      showImportExport={true}
+      onScheduleChange={(schedule) => console.log('Schedule updated:', schedule)}
+      onError={(error) => console.error('Error:', error)}
+    />
+  );
+};
+```
+
+### Using the Hook Directly
+
+```tsx
+import { useScheduleData, ScheduleTimeline } from '@demmarl/schedule-timeline';
+
+const CustomScheduleApp = () => {
+  const {
+    schedule,
+    loading,
+    error,
+    save,
+    load,
+    exportICS,
+    addActivity,
+    updateActivity,
+  } = useScheduleData([], {
+    loadFromDatabase: async () => {
+      const response = await fetch('/api/schedule');
+      return response.json();
+    },
+    saveToDatabase: async (data) => {
+      await fetch('/api/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    },
+  });
+
+  const handleExportICS = async () => {
+    const icsContent = await exportICS('My Schedule');
+    // Download the file
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'schedule.ics';
+    a.click();
+  };
+
+  return (
+    <div>
+      <div className="controls">
+        <button onClick={save}>Save</button>
+        <button onClick={load}>Load</button>
+        <button onClick={handleExportICS}>Export ICS</button>
+      </div>
+      <ScheduleTimeline schedule={schedule} />
+    </div>
+  );
+};
+```
+
+### Database Format
+
+The library expects database activities in this format:
+
+```typescript
+interface DatabaseActivity {
+  id: string | number;
+  title: string;
+  description?: string;
+  startTime: string; // "09:00" or ISO string
+  endTime: string;   // "10:00" or ISO string
+  date: string;      // "2024-03-21" (YYYY-MM-DD)
+  type?: string;     // For theming
+  color?: string;
+  textColor?: string;
+}
+
+interface DatabaseSchedule {
+  activities: DatabaseActivity[];
+  metadata?: {
+    title?: string;
+    description?: string;
+    timezone?: string;
+  };
+}
+```
+
+### Converting Data Formats
+
+```tsx
+import { 
+  convertDatabaseToSchedule, 
+  convertScheduleToDatabase 
+} from '@demmarl/schedule-timeline';
+
+// Convert from database format to schedule format
+const schedule = convertDatabaseToSchedule(databaseData);
+
+// Convert from schedule format to database format
+const databaseData = convertScheduleToDatabase(schedule, 2024);
 ```
 
 ## Advanced Configuration

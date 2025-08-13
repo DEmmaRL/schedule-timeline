@@ -13,6 +13,10 @@ Originally created for and inspired by the ICPC TCMX 2025, this component has be
 - 🎯 **Interactive**: Click and hover event handlers for activities
 - 🔧 **Highly configurable**: Extensive configuration options for different use cases
 
+## Demo
+
+https://github.com/DEmmaRL/schedule-timeline/assets/demo.mov
+
 ## Quick Start
 
 ### Installation

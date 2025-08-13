@@ -1,10 +1,10 @@
 // Main component exports
 export { ScheduleTimeline } from './ScheduleTimeline';
-export { ScheduleManager } from './components/ScheduleManager';
 
 // Type exports
 export type {
   Activity,
+  Event,
   DaySchedule,
   TimelineConfig,
   ColorTheme,
@@ -12,31 +12,10 @@ export type {
   TimeMarker,
 } from './types';
 
-// Database integration types
-export type {
-  DatabaseActivity,
-  DatabaseSchedule,
-} from './utils/dataUtils';
+// Event utilities
+export { eventsToSchedule, createEvent, createDayEvents } from './utils/eventUtils';
 
-export type {
-  ScheduleDataHookOptions,
-  ScheduleDataHook
-} from './hooks/useScheduleData';
-
-export type { ScheduleManagerProps } from './components/ScheduleManager';
-
-// Hook exports
-export { useScheduleData } from './hooks/useScheduleData';
-
-// Data utility exports
-export { 
-  convertDatabaseToSchedule, 
-  convertScheduleToDatabase, 
-  exportToICS, 
-  parseICSToSchedule 
-} from './utils/dataUtils';
-
-// Utility functions that users might find helpful
+// Utility functions that users might find helpful (backward compatibility)
 export const createActivity = (
   time: string,
   title: string,

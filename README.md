@@ -33,30 +33,132 @@ npm install @demmarl/schedule-timeline
 
 ```tsx
 import React from 'react';
-import { ScheduleTimeline, createDaySchedule, createActivity } from '@demmarl/schedule-timeline';
+import { ScheduleTimeline, Event } from '@demmarl/schedule-timeline';
 
 const MySchedule = () => {
-  const schedule = [
-    createDaySchedule('21', 'Thursday', [
-      createActivity('9:00 - 10:00', 'Opening Ceremony', 'opening'),
-      createActivity('10:00 - 12:00', 'Workshop Session', 'theory'),
-      createActivity('12:00 - 13:00', 'Lunch Break', 'break'),
-    ]),
-    createDaySchedule('22', 'Friday', [
-      createActivity('9:00 - 11:00', 'Competition', 'contest'),
-      createActivity('11:00 - 11:30', 'Coffee Break', 'break'),
-      createActivity('11:30 - 13:00', 'Awards Ceremony', 'closing'),
-    ]),
+  // Simple array of events - can come from anywhere (API, database, file, etc.)
+  const events: Event[] = [
+    {
+      id: 1,
+      title: 'Opening Ceremony',
+      startTime: '09:00',
+      endTime: '10:00',
+      date: '2024-03-21',
+      type: 'opening',
+      description: 'Welcome and event presentation',
+    },
+    {
+      id: 2,
+      title: 'Workshop Session',
+      startTime: '10:00',
+      endTime: '12:00',
+      date: '2024-03-21',
+      type: 'theory',
+    },
+    {
+      id: 3,
+      title: 'Lunch Break',
+      startTime: '12:00',
+      endTime: '13:00',
+      date: '2024-03-21',
+      type: 'break',
+    },
+    {
+      id: 4,
+      title: 'Competition',
+      startTime: '09:00',
+      endTime: '14:00',
+      date: '2024-03-22',
+      type: 'contest',
+    },
   ];
 
   return (
     <ScheduleTimeline
-      schedule={schedule}
-      onActivityClick={(activity, dayIndex) => {
-        console.log('Clicked:', activity.title, 'on day', dayIndex);
+      events={events}
+      onEventClick={(event) => {
+        console.log('Clicked:', event.title);
       }}
     />
   );
+};
+```
+
+### Loading Events from API/Database
+
+```tsx
+import React from 'react';
+import { ScheduleTimeline, Event } from '@demmarl/schedule-timeline';
+
+const ApiSchedule = () => {
+  const [events, setEvents] = React.useState<Event[]>([]);
+
+  React.useEffect(() => {
+    const loadEvents = async () => {
+      // Load from your API/database
+      const response = await fetch('/api/events');
+      const data = await response.json();
+      
+      // Convert your data format to Event[]
+      const formattedEvents: Event[] = data.map((item: any) => ({
+        id: item.id,
+        title: item.name,
+        startTime: item.start_time,
+        endTime: item.end_time,
+        date: item.event_date,
+        type: item.category,
+        description: item.details,
+      }));
+      
+      setEvents(formattedEvents);
+    };
+
+    loadEvents();
+  }, []);
+
+  return (
+    <ScheduleTimeline
+      events={events}
+      onEventClick={(event) => {
+        // Handle event clicks - open modal, navigate, etc.
+        console.log('Event clicked:', event);
+      }}
+    />
+  );
+};
+```
+
+### Using Helper Functions
+
+```tsx
+import { ScheduleTimeline, createEvent, createDayEvents } from '@demmarl/schedule-timeline';
+
+const HelperExample = () => {
+  const events = [
+    // Create individual events
+    createEvent('Registration', '08:00', '09:00', '2024-03-21', {
+      type: 'registration',
+      description: 'Participant registration'
+    }),
+    
+    // Create multiple events for the same day
+    ...createDayEvents('2024-03-21', [
+      {
+        title: 'Keynote',
+        startTime: '09:00',
+        endTime: '10:00',
+        type: 'opening',
+      },
+      {
+        title: 'Workshop',
+        startTime: '10:30',
+        endTime: '12:00',
+        type: 'theory',
+      },
+    ]),
+  ];
+
+  return <ScheduleTimeline events={events} />;
 };
 ```
 
@@ -100,137 +202,75 @@ npm run test:coverage # Run tests with coverage
 npm run test:watch    # Run tests in watch mode
 ```
 
-## Database Integration & ICS Support
+## Working with Your Data
 
-### Using ScheduleManager with Database
+The beauty of this approach is that you can use **any data source** and **any data format**. Just convert your data to the simple `Event[]` format:
+
+### From Database
 
 ```tsx
-import { ScheduleManager, DatabaseSchedule } from '@demmarl/schedule-timeline';
+// Your database might return data like this:
+const dbData = [
+  { id: 1, name: 'Meeting', start: '09:00', end: '10:00', day: '2024-03-21', category: 'work' },
+  { id: 2, name: 'Lunch', start: '12:00', end: '13:00', day: '2024-03-21', category: 'break' },
+];
 
-const MyApp = () => {
-  const loadFromDatabase = async (): Promise<DatabaseSchedule> => {
-    const response = await fetch('/api/schedule');
-    return response.json();
-  };
+// Convert to Event[] format:
+const events: Event[] = dbData.map(item => ({
+  id: item.id,
+  title: item.name,
+  startTime: item.start,
+  endTime: item.end,
+  date: item.day,
+  type: item.category,
+}));
 
-  const saveToDatabase = async (data: DatabaseSchedule): Promise<void> => {
-    await fetch('/api/schedule', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-  };
+<ScheduleTimeline events={events} />
+```
 
-  return (
-    <ScheduleManager
-      dataOptions={{
-        loadFromDatabase,
-        saveToDatabase,
-        autoSave: true,
-        autoSaveInterval: 30000, // Auto-save every 30 seconds
-      }}
-      showEditControls={true}
-      showImportExport={true}
-      onScheduleChange={(schedule) => console.log('Schedule updated:', schedule)}
-      onError={(error) => console.error('Error:', error)}
-    />
-  );
+### From API Response
+
+```tsx
+const loadEvents = async () => {
+  const response = await fetch('/api/schedule');
+  const apiData = await response.json();
+  
+  // Convert whatever format your API returns:
+  const events = apiData.schedule.map(item => ({
+    id: item.eventId,
+    title: item.eventName,
+    startTime: item.startHour,
+    endTime: item.endHour,
+    date: item.eventDate,
+    type: item.eventType,
+    description: item.notes,
+  }));
+  
+  setEvents(events);
 };
 ```
 
-### Using the Hook Directly
+### Saving Changes
 
 ```tsx
-import { useScheduleData, ScheduleTimeline } from '@demmarl/schedule-timeline';
-
-const CustomScheduleApp = () => {
-  const {
-    schedule,
-    loading,
-    error,
-    save,
-    load,
-    exportICS,
-    addActivity,
-    updateActivity,
-  } = useScheduleData([], {
-    loadFromDatabase: async () => {
-      const response = await fetch('/api/schedule');
-      return response.json();
-    },
-    saveToDatabase: async (data) => {
-      await fetch('/api/schedule', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-    },
+const handleEventClick = async (event: Event) => {
+  // Edit the event however you want
+  const updatedEvent = { ...event, title: 'Updated Title' };
+  
+  // Update your local state
+  setEvents(prev => prev.map(e => e.id === event.id ? updatedEvent : e));
+  
+  // Save to your backend in whatever format you need
+  await fetch('/api/events/' + event.id, {
+    method: 'PUT',
+    body: JSON.stringify({
+      name: updatedEvent.title,
+      start_time: updatedEvent.startTime,
+      end_time: updatedEvent.endTime,
+      // ... your format
+    }),
   });
-
-  const handleExportICS = async () => {
-    const icsContent = await exportICS('My Schedule');
-    // Download the file
-    const blob = new Blob([icsContent], { type: 'text/calendar' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'schedule.ics';
-    a.click();
-  };
-
-  return (
-    <div>
-      <div className="controls">
-        <button onClick={save}>Save</button>
-        <button onClick={load}>Load</button>
-        <button onClick={handleExportICS}>Export ICS</button>
-      </div>
-      <ScheduleTimeline schedule={schedule} />
-    </div>
-  );
 };
-```
-
-### Database Format
-
-The library expects database activities in this format:
-
-```typescript
-interface DatabaseActivity {
-  id: string | number;
-  title: string;
-  description?: string;
-  startTime: string; // "09:00" or ISO string
-  endTime: string;   // "10:00" or ISO string
-  date: string;      // "2024-03-21" (YYYY-MM-DD)
-  type?: string;     // For theming
-  color?: string;
-  textColor?: string;
-}
-
-interface DatabaseSchedule {
-  activities: DatabaseActivity[];
-  metadata?: {
-    title?: string;
-    description?: string;
-    timezone?: string;
-  };
-}
-```
-
-### Converting Data Formats
-
-```tsx
-import { 
-  convertDatabaseToSchedule, 
-  convertScheduleToDatabase 
-} from '@demmarl/schedule-timeline';
-
-// Convert from database format to schedule format
-const schedule = convertDatabaseToSchedule(databaseData);
-
-// Convert from schedule format to database format
-const databaseData = convertScheduleToDatabase(schedule, 2024);
 ```
 
 ## Advanced Configuration

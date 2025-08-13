@@ -15,7 +15,7 @@ Originally created for and inspired by the ICPC TCMX 2025, this component has be
 
 ## Demo
 
-https://github.com/DEmmaRL/schedule-timeline/blob/main/assets/demo.mp4
+https://github.com/user-attachments/assets/d6bd78c7-2878-47b9-9845-8cf1dfd55f81
 
 ## Quick Start
 

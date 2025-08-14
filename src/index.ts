@@ -1,9 +1,10 @@
-// Main component export
+// Main component exports
 export { ScheduleTimeline } from './ScheduleTimeline';
 
 // Type exports
 export type {
   Activity,
+  Event,
   DaySchedule,
   TimelineConfig,
   ColorTheme,
@@ -11,7 +12,13 @@ export type {
   TimeMarker,
 } from './types';
 
-// Utility functions that users might find helpful
+// Event utilities
+export { eventsToSchedule, createEvent, createDayEvents } from './utils/eventUtils';
+
+// ICS utilities (calendar standard)
+export { eventsToICS, icsToEvents, downloadICS, loadICSFile } from './utils/icsUtils';
+
+// Utility functions that users might find helpful (backward compatibility)
 export const createActivity = (
   time: string,
   title: string,
@@ -27,10 +34,12 @@ export const createActivity = (
 export const createDaySchedule = (
   date: string,
   day: string,
+  dayName: string,
   activities: import('./types').Activity[]
 ): import('./types').DaySchedule => ({
   date,
   day,
+  dayName,
   activities,
 });
 

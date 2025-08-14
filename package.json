@@ -1,6 +1,6 @@
 {
   "name": "@demmarl/schedule-timeline",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "A flexible and customizable schedule timeline component for React",
   "type": "module",
   "main": "dist/index.js",
@@ -71,7 +71,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DEmmaRL/schedule-timeline.git"
+    "url": "git+https://github.com/DEmmaRL/schedule-timeline.git"
   },
   "bugs": {
     "url": "https://github.com/DEmmaRL/schedule-timeline/issues"

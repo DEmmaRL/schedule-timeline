@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScheduleTimelineProps, Activity, TimeMarker, TimelineConfig, ColorTheme } from './types';
+import { ScheduleTimelineProps, Activity, Event, TimeMarker, TimelineConfig, ColorTheme } from './types';
+import { eventsToSchedule } from './utils/eventUtils';
 
 const defaultConfig: TimelineConfig = {
   startHour: 8,
@@ -25,16 +26,28 @@ const defaultColorTheme: ColorTheme = {
 
 export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
   schedule,
+  events,
   config = {},
   colorTheme = {},
   className = '',
   onActivityClick,
+  onEventClick,
   onActivityHover,
+  onEventHover,
   customActivityRenderer,
+  customEventRenderer,
   showHeader = true,
   headerClassName = '',
   activityClassName = '',
 }) => {
+  // Determinar qué datos usar - priorizar events sobre schedule
+  const finalSchedule = React.useMemo(() => {
+    if (events && events.length > 0) {
+      return eventsToSchedule(events);
+    }
+    return schedule || [];
+  }, [events, schedule]);
+
   const finalConfig = { ...defaultConfig, ...config };
   const finalColorTheme = { ...defaultColorTheme, ...colorTheme };
 
@@ -95,6 +108,18 @@ export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
 
   const headerHeight = showHeader ? 48 : 0;
 
+  // Crear un mapa de eventos originales para los handlers
+  const eventMap = React.useMemo(() => {
+    if (!events) return new Map();
+    
+    const map = new Map<string, Event>();
+    events.forEach(event => {
+      const key = `${event.date}-${event.startTime}-${event.title}`;
+      map.set(key, event);
+    });
+    return map;
+  }, [events]);
+
   return (
     <div className={`bg-white rounded-xl shadow-lg overflow-hidden ${className}`}>
       <div className="overflow-x-auto overflow-y-hidden rounded-lg">
@@ -129,7 +154,7 @@ export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
           </div>
 
           {/* Days columns */}
-          {schedule.map((daySchedule, dayIndex) => (
+          {finalSchedule.map((daySchedule, dayIndex) => (
             <div
               key={dayIndex}
               className="flex-1 relative min-w-[100px]"
@@ -138,12 +163,12 @@ export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
               {/* Day header */}
               {showHeader && (
                 <div className={`bg-gray-200/30 p-3 font-semibold text-center text-xs md:text-sm h-12 flex items-center justify-center ${headerClassName}`}>
-                  {daySchedule.day} {daySchedule.date}
+                  {daySchedule.dayName} {daySchedule.day}
                 </div>
               )}
 
               {/* Activities */}
-              {daySchedule.activities.map((activity, actIndex) => {
+              {daySchedule.activities && daySchedule.activities.map((activity, actIndex) => {
                 const startTime = activity.time.split(' - ')[0];
                 const startMinutes = timeToMinutes(startTime);
                 const duration = getDuration(activity.time);
@@ -158,16 +183,56 @@ export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
                 };
 
                 const handleClick = () => {
+                  // Si tenemos eventos originales, usar el handler de eventos
+                  if (events && onEventClick) {
+                    const eventKey = `${daySchedule.date}-${startTime}-${activity.title}`;
+                    const originalEvent = eventMap.get(eventKey);
+                    if (originalEvent) {
+                      onEventClick(originalEvent);
+                      return;
+                    }
+                  }
+                  
+                  // Fallback al handler de actividades
                   if (onActivityClick) {
                     onActivityClick(activity, dayIndex);
                   }
                 };
 
                 const handleMouseEnter = () => {
+                  // Similar lógica para hover
+                  if (events && onEventHover) {
+                    const eventKey = `${daySchedule.date}-${startTime}-${activity.title}`;
+                    const originalEvent = eventMap.get(eventKey);
+                    if (originalEvent) {
+                      onEventHover(originalEvent);
+                      return;
+                    }
+                  }
+                  
                   if (onActivityHover) {
                     onActivityHover(activity, dayIndex);
                   }
                 };
+
+                // Usar renderer personalizado si está disponible
+                if (events && customEventRenderer) {
+                  const eventKey = `${daySchedule.date}-${startTime}-${activity.title}`;
+                  const originalEvent = eventMap.get(eventKey);
+                  if (originalEvent) {
+                    return (
+                      <div
+                        key={activity.id || actIndex}
+                        className="absolute left-0 right-0"
+                        style={activityStyle}
+                        onClick={handleClick}
+                        onMouseEnter={handleMouseEnter}
+                      >
+                        {customEventRenderer(originalEvent, activityStyle)}
+                      </div>
+                    );
+                  }
+                }
 
                 if (customActivityRenderer) {
                   return (

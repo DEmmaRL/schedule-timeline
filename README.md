@@ -12,6 +12,10 @@ Originally created for and inspired by the ICPC TCMX 2025, this component has be
 - ⚡ **TypeScript support**: Full TypeScript support with comprehensive type definitions
 - 🎯 **Interactive**: Click and hover event handlers for activities
 - 🔧 **Highly configurable**: Extensive configuration options for different use cases
+- 🗄️ **Database integration**: Built-in support for loading/saving schedule data
+- 📋 **ICS support**: Import and export standard calendar files (.ics)
+- 🔄 **Auto-save**: Automatic data persistence with configurable intervals
+- ✏️ **Editable**: Built-in editing capabilities with the ScheduleManager component
 
 ## Demo
 
@@ -29,30 +33,132 @@ npm install @demmarl/schedule-timeline
 
 ```tsx
 import React from 'react';
-import { ScheduleTimeline, createDaySchedule, createActivity } from '@demmarl/schedule-timeline';
+import { ScheduleTimeline, Event } from '@demmarl/schedule-timeline';
 
 const MySchedule = () => {
-  const schedule = [
-    createDaySchedule('21', 'Thursday', [
-      createActivity('9:00 - 10:00', 'Opening Ceremony', 'opening'),
-      createActivity('10:00 - 12:00', 'Workshop Session', 'theory'),
-      createActivity('12:00 - 13:00', 'Lunch Break', 'break'),
-    ]),
-    createDaySchedule('22', 'Friday', [
-      createActivity('9:00 - 11:00', 'Competition', 'contest'),
-      createActivity('11:00 - 11:30', 'Coffee Break', 'break'),
-      createActivity('11:30 - 13:00', 'Awards Ceremony', 'closing'),
-    ]),
+  // Simple array of events - can come from anywhere (API, database, file, etc.)
+  const events: Event[] = [
+    {
+      id: 1,
+      title: 'Opening Ceremony',
+      startTime: '09:00',
+      endTime: '10:00',
+      date: '2024-03-21',
+      type: 'opening',
+      description: 'Welcome and event presentation',
+    },
+    {
+      id: 2,
+      title: 'Workshop Session',
+      startTime: '10:00',
+      endTime: '12:00',
+      date: '2024-03-21',
+      type: 'theory',
+    },
+    {
+      id: 3,
+      title: 'Lunch Break',
+      startTime: '12:00',
+      endTime: '13:00',
+      date: '2024-03-21',
+      type: 'break',
+    },
+    {
+      id: 4,
+      title: 'Competition',
+      startTime: '09:00',
+      endTime: '14:00',
+      date: '2024-03-22',
+      type: 'contest',
+    },
   ];
 
   return (
     <ScheduleTimeline
-      schedule={schedule}
-      onActivityClick={(activity, dayIndex) => {
-        console.log('Clicked:', activity.title, 'on day', dayIndex);
+      events={events}
+      onEventClick={(event) => {
+        console.log('Clicked:', event.title);
       }}
     />
   );
+};
+```
+
+### Loading Events from API/Database
+
+```tsx
+import React from 'react';
+import { ScheduleTimeline, Event } from '@demmarl/schedule-timeline';
+
+const ApiSchedule = () => {
+  const [events, setEvents] = React.useState<Event[]>([]);
+
+  React.useEffect(() => {
+    const loadEvents = async () => {
+      // Load from your API/database
+      const response = await fetch('/api/events');
+      const data = await response.json();
+      
+      // Convert your data format to Event[]
+      const formattedEvents: Event[] = data.map((item: any) => ({
+        id: item.id,
+        title: item.name,
+        startTime: item.start_time,
+        endTime: item.end_time,
+        date: item.event_date,
+        type: item.category,
+        description: item.details,
+      }));
+      
+      setEvents(formattedEvents);
+    };
+
+    loadEvents();
+  }, []);
+
+  return (
+    <ScheduleTimeline
+      events={events}
+      onEventClick={(event) => {
+        // Handle event clicks - open modal, navigate, etc.
+        console.log('Event clicked:', event);
+      }}
+    />
+  );
+};
+```
+
+### Using Helper Functions
+
+```tsx
+import { ScheduleTimeline, createEvent, createDayEvents } from '@demmarl/schedule-timeline';
+
+const HelperExample = () => {
+  const events = [
+    // Create individual events
+    createEvent('Registration', '08:00', '09:00', '2024-03-21', {
+      type: 'registration',
+      description: 'Participant registration'
+    }),
+    
+    // Create multiple events for the same day
+    ...createDayEvents('2024-03-21', [
+      {
+        title: 'Keynote',
+        startTime: '09:00',
+        endTime: '10:00',
+        type: 'opening',
+      },
+      {
+        title: 'Workshop',
+        startTime: '10:30',
+        endTime: '12:00',
+        type: 'theory',
+      },
+    ]),
+  ];
+
+  return <ScheduleTimeline events={events} />;
 };
 ```
 
@@ -94,6 +200,146 @@ When making changes to the library:
 npm test              # Run tests
 npm run test:coverage # Run tests with coverage
 npm run test:watch    # Run tests in watch mode
+```
+
+## Working with Your Data
+
+The beauty of this approach is that you can use **any data source** and **any data format**. Just convert your data to the simple `Event[]` format:
+
+### From Database
+
+```tsx
+// Your database might return data like this:
+const dbData = [
+  { id: 1, name: 'Meeting', start: '09:00', end: '10:00', day: '2024-03-21', category: 'work' },
+  { id: 2, name: 'Lunch', start: '12:00', end: '13:00', day: '2024-03-21', category: 'break' },
+];
+
+// Convert to Event[] format:
+const events: Event[] = dbData.map(item => ({
+  id: item.id,
+  title: item.name,
+  startTime: item.start,
+  endTime: item.end,
+  date: item.day,
+  type: item.category,
+}));
+
+<ScheduleTimeline events={events} />
+```
+
+### From API Response
+
+```tsx
+const loadEvents = async () => {
+  const response = await fetch('/api/schedule');
+  const apiData = await response.json();
+  
+  // Convert whatever format your API returns:
+  const events = apiData.schedule.map(item => ({
+    id: item.eventId,
+    title: item.eventName,
+    startTime: item.startHour,
+    endTime: item.endHour,
+    date: item.eventDate,
+    type: item.eventType,
+    description: item.notes,
+  }));
+  
+  setEvents(events);
+};
+```
+
+### Saving Changes
+
+```tsx
+const handleEventClick = async (event: Event) => {
+  // Edit the event however you want
+  const updatedEvent = { ...event, title: 'Updated Title' };
+  
+  // Update your local state
+  setEvents(prev => prev.map(e => e.id === event.id ? updatedEvent : e));
+  
+  // Save to your backend in whatever format you need
+  await fetch('/api/events/' + event.id, {
+    method: 'PUT',
+    body: JSON.stringify({
+      name: updatedEvent.title,
+      start_time: updatedEvent.startTime,
+      end_time: updatedEvent.endTime,
+      // ... your format
+    }),
+  });
+};
+```
+
+## ICS Standard Support
+
+The library includes built-in support for the ICS (iCalendar) standard, making it easy to import/export calendar data that works with Google Calendar, Outlook, Apple Calendar, and more.
+
+### Export to ICS
+
+```tsx
+import { downloadICS, eventsToICS } from '@demmarl/schedule-timeline';
+
+const MySchedule = () => {
+  const events = [/* your events */];
+
+  const exportToCalendar = () => {
+    // Download as .ics file
+    downloadICS(events, 'my-schedule.ics', 'My Event Schedule');
+  };
+
+  const getICSContent = () => {
+    // Get ICS content as string (for API calls, etc.)
+    const icsContent = eventsToICS(events, 'My Calendar');
+    return icsContent;
+  };
+
+  return (
+    <div>
+      <ScheduleTimeline events={events} />
+      <button onClick={exportToCalendar}>
+        Add to Calendar
+      </button>
+    </div>
+  );
+};
+```
+
+### Import from ICS
+
+```tsx
+import { loadICSFile, icsToEvents } from '@demmarl/schedule-timeline';
+
+const ImportExample = () => {
+  const [events, setEvents] = useState([]);
+
+  const handleFileImport = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const importedEvents = await loadICSFile(file);
+        setEvents(prev => [...prev, ...importedEvents]);
+      } catch (error) {
+        console.error('Import failed:', error);
+      }
+    }
+  };
+
+  const handleICSContent = (icsContent: string) => {
+    // Parse ICS content from API, clipboard, etc.
+    const events = icsToEvents(icsContent);
+    setEvents(events);
+  };
+
+  return (
+    <div>
+      <input type="file" accept=".ics" onChange={handleFileImport} />
+      <ScheduleTimeline events={events} />
+    </div>
+  );
+};
 ```
 
 ## Advanced Configuration

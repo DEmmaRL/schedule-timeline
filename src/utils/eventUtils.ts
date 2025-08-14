@@ -39,6 +39,7 @@ export function eventsToSchedule(events: Event[]): DaySchedule[] {
       return {
         date,
         day: dayNumber,
+        dayName,
         activities,
       };
     });

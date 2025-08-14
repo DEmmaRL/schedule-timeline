@@ -34,10 +34,12 @@ export const createActivity = (
 export const createDaySchedule = (
   date: string,
   day: string,
+  dayName: string,
   activities: import('./types').Activity[]
 ): import('./types').DaySchedule => ({
   date,
   day,
+  dayName,
   activities,
 });
 

@@ -24,6 +24,7 @@ export interface Event {
 export interface DaySchedule {
   date: string;
   day: string;
+  dayName: string;
   activities: Activity[];
 }
 

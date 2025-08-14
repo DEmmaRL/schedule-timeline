@@ -163,12 +163,12 @@ export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
               {/* Day header */}
               {showHeader && (
                 <div className={`bg-gray-200/30 p-3 font-semibold text-center text-xs md:text-sm h-12 flex items-center justify-center ${headerClassName}`}>
-                  {daySchedule.day} {daySchedule.date}
+                  {daySchedule.dayName} {daySchedule.day}
                 </div>
               )}
 
               {/* Activities */}
-              {daySchedule.activities.map((activity, actIndex) => {
+              {daySchedule.activities && daySchedule.activities.map((activity, actIndex) => {
                 const startTime = activity.time.split(' - ')[0];
                 const startMinutes = timeToMinutes(startTime);
                 const duration = getDuration(activity.time);

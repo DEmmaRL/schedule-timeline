@@ -64,16 +64,16 @@ const ConferenceExample = () => {
   ];
 
   const customTheme = {
-    registration: { background: 'bg-blue-100', text: 'text-blue-800' },
-    keynote: { background: 'bg-purple-200', text: 'text-purple-900' },
-    panel: { background: 'bg-green-100', text: 'text-green-800' },
-    workshop: { background: 'bg-orange-100', text: 'text-orange-800' },
-    technical: { background: 'bg-indigo-100', text: 'text-indigo-800' },
-    industry: { background: 'bg-yellow-100', text: 'text-yellow-800' },
-    networking: { background: 'bg-pink-100', text: 'text-pink-800' },
-    break: { background: 'bg-gray-100', text: 'text-gray-700' },
-    closing: { background: 'bg-red-100', text: 'text-red-800' },
-    default: { background: 'bg-gray-50', text: 'text-gray-600' },
+    registration: { background: '#dbeafe', text: '#1e40af' },
+    keynote: { background: '#e9d5ff', text: '#4c1d95' },
+    panel: { background: '#d1fae5', text: '#065f46' },
+    workshop: { background: '#ffedd5', text: '#9a3412' },
+    technical: { background: '#e0e7ff', text: '#3730a3' },
+    industry: { background: '#fef08a', text: '#854d0e' },
+    networking: { background: '#fce7f3', text: '#86198f' },
+    break: { background: '#f3f4f6', text: '#374151' },
+    closing: { background: '#fee2e2', text: '#991b1b' },
+    default: { background: '#f9fafb', text: '#4b5563' },
   };
 
   const config = {

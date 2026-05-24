@@ -1,0 +1,48 @@
+---
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Schedule Timeline — Astro Example</title>
+    <style>
+      body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; padding: 24px; }
+      schedule-timeline, #timeline { display: block; width: 100%; max-width: 900px; margin: 16px auto; }
+    </style>
+  </head>
+  <body>
+    <h1>Schedule Timeline — Astro example</h1>
+
+    <h2>1) Web Component (zero framework)</h2>
+    <p>Import the web-component module on the client and use the custom element directly.</p>
+    <script type="module">
+      // This import registers <schedule-timeline> (auto-registering build)
+      import '@demmarl/schedule-timeline-core/web-component';
+    </script>
+
+    <schedule-timeline
+      id="wc"
+      events='[{"title":"Opening","startTime":"09:00","endTime":"10:00","date":"2026-06-01","type":"opening"}]'
+      config='{"startHour":8,"endHour":20}'
+    ></schedule-timeline>
+
+    <h2>2) Programmatic mount with renderTimeline()</h2>
+    <p>Import the core renderer and mount into a container element.</p>
+    <div id="timeline"></div>
+
+    <script type="module">
+      import { renderTimeline } from '@demmarl/schedule-timeline-core';
+
+      const container = document.getElementById('timeline');
+      renderTimeline(container, {
+        events: [
+          { title: 'Opening', startTime: '09:00', endTime: '10:00', date: '2026-06-01', type: 'opening' },
+          { title: 'Break', startTime: '10:00', endTime: '10:30', date: '2026-06-01', type: 'break' }
+        ],
+        config: { startHour: 8, endHour: 20 },
+        onEventClick: (ev) => console.log('clicked', ev)
+      });
+    </script>
+  </body>
+</html>

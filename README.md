@@ -396,6 +396,40 @@ const CustomSchedule = () => {
     />
   );
 };
+
+## Astro usage
+
+There are two recommended ways to use the timeline in an Astro site: the Web Component (zero framework) or the programmatic `renderTimeline()` mount. Both run client-side and do not require React.
+
+- Web Component (recommended for templates): import the web-component entry and use the custom element.
+
+```html
+<script type="module">
+  import '@demmarl/schedule-timeline-core/web-component';
+</script>
+
+<schedule-timeline
+  events='[{"title":"Opening","startTime":"09:00","endTime":"10:00","date":"2026-06-01","type":"opening"}]'
+  config='{"startHour":8,"endHour":20}'
+></schedule-timeline>
+```
+
+- Programmatic mount: import `renderTimeline` and mount into a container element from a client script.
+
+```html
+<div id="timeline"></div>
+<script type="module">
+  import { renderTimeline } from '@demmarl/schedule-timeline-core';
+
+  renderTimeline(document.getElementById('timeline'), {
+    events: [ /* ... */ ],
+    config: { startHour: 8, endHour: 20 },
+  });
+</script>
+```
+
+See the runnable example at `examples/astro/timeline.astro` for a minimal drop-in demo.
+
 ```
 
 ## API Reference

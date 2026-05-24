@@ -1,0 +1,54 @@
+{
+  "name": "@demmarl/schedule-timeline-core",
+  "version": "1.0.0",
+  "description": "Framework-agnostic schedule timeline renderer",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "schedule",
+    "timeline",
+    "calendar",
+    "vanilla",
+    "web-component"
+  ],
+  "author": "DEmmaRL <diegoriverajobs@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "rollup": "^4.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./ics": {
+      "import": "./dist/ics.esm.js",
+      "require": "./dist/ics.js"
+    }
+  }
+}

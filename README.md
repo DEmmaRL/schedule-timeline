@@ -358,18 +358,16 @@ const AdvancedSchedule = () => {
 
   const customTheme = {
     ...colorThemes.minimal,
-    workshop: { background: 'bg-indigo-200', text: 'text-indigo-900' },
-    networking: { background: 'bg-emerald-200', text: 'text-emerald-900' },
+    workshop: { background: '#6366f1', text: '#ffffff' },
+    networking: { background: '#10b981', text: '#ffffff' },
   };
 
   return (
     <ScheduleTimeline
-      schedule={schedule}
+      events={events}
       config={config}
       colorTheme={customTheme}
       className="my-custom-timeline"
-      onActivityClick={handleActivityClick}
-      onActivityHover={handleActivityHover}
     />
   );
 };
@@ -391,7 +389,7 @@ const CustomSchedule = () => {
 
   return (
     <ScheduleTimeline
-      schedule={schedule}
+      events={events}
       customActivityRenderer={customRenderer}
     />
   );
@@ -435,18 +433,19 @@ There are two recommended ways to use the timeline in an Astro site: the Web Com
 See the runnable example at `examples/astro/timeline.astro` for a minimal drop-in demo.
 
 ## API Reference
-//TODO
+
 ### ScheduleTimelineProps
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `schedule` | `DaySchedule[]` | **required** | Array of day schedules |
+| `events` | `Event[]` | `[]` | Array of events to display |
+| `schedule` | `DaySchedule[]` | `[]` | Array of day schedules (legacy format) |
 | `config` | `TimelineConfig` | `{}` | Timeline configuration options |
 | `colorTheme` | `ColorTheme` | `defaultTheme` | Color theme for activities |
 | `className` | `string` | `''` | Additional CSS classes |
-| `onActivityClick` | `(activity, dayIndex) => void` | `undefined` | Click handler for activities |
-| `onActivityHover` | `(activity, dayIndex) => void` | `undefined` | Hover handler for activities |
-| `customActivityRenderer` | `(activity, style) => ReactNode` | `undefined` | Custom activity renderer |
+| `onEventClick` | `(event) => void` | `undefined` | Click handler for events |
+| `onEventHover` | `(event) => void` | `undefined` | Hover handler for events |
+| `customEventRenderer` | `(event, style) => ReactNode` | `undefined` | Custom event renderer |
 | `showHeader` | `boolean` | `true` | Show day headers |
 | `headerClassName` | `string` | `''` | Additional CSS classes for headers |
 | `activityClassName` | `string` | `''` | Additional CSS classes for activities |
@@ -462,13 +461,15 @@ See the runnable example at `examples/astro/timeline.astro` for a minimal drop-i
 | `timeMarkerInterval` | `number` | `60` | Interval between time markers (minutes) |
 | `responsive` | `boolean` | `true` | Enable responsive design |
 
-### Activity
+### Event
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `time` | `string` | ✅ | Time range (e.g., "9:00 - 10:00") |
-| `title` | `string` | ✅ | Activity title |
-| `type` | `string` | ❌ | Activity type for theming |
+| `title` | `string` | ✅ | Event title |
+| `startTime` | `string` | ✅ | Start time (e.g., "09:00") |
+| `endTime` | `string` | ✅ | End time (e.g., "10:00") |
+| `date` | `string` | ✅ | Date (e.g., "2024-03-21") |
+| `type` | `string` | ❌ | Event type for theming |
 | `id` | `string \| number` | ❌ | Unique identifier |
 | `description` | `string` | ❌ | Additional description |
 | `color` | `string` | ❌ | Custom background color |
@@ -482,12 +483,13 @@ See the runnable example at `examples/astro/timeline.astro` for a minimal drop-i
 
 ## Styling
 
-The component uses Tailwind CSS classes by default, but you can override styles using:
+The component uses inline styles for layout and provides CSS Variables for easy theming:
 
-1. **Custom CSS classes**: Pass `className`, `headerClassName`, or `activityClassName`
-2. **Custom themes**: Define your own `ColorTheme` object
-3. **Inline colors**: Set `color` and `textColor` on individual activities
-4. **Custom renderer**: Use `customActivityRenderer` for complete control
+1. **CSS Variables**: Override any default color using `--st-color-[type]` and `--st-text-[type]`
+2. **Custom CSS classes**: Pass `className`, `headerClassName`, or `activityClassName`
+3. **Custom themes**: Define your own `ColorTheme` object with hex/RGBA colors
+4. **Inline colors**: Set `color` and `textColor` on individual activities
+5. **Custom renderer**: Use `customActivityRenderer` for complete control
 
 ## License
 

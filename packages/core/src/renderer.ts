@@ -35,16 +35,16 @@ const defaultConfig: Required<TimelineConfig> = {
 };
 
 const defaultColorTheme: ColorTheme = {
-  registration: { background: 'rgba(147, 197, 253, 0.6)', text: '#1e3a8a' },
-  opening: { background: 'rgba(244, 114, 182, 0.6)', text: '#831843' },
-  theory: { background: 'rgba(254, 215, 170, 0.6)', text: '#9a3412' },
-  break: { background: 'rgba(191, 219, 254, 0.6)', text: '#1e3a8a' },
-  contest: { background: 'rgba(249, 168, 212, 0.6)', text: '#831843' },
-  upsolving: { background: 'rgba(187, 247, 208, 0.6)', text: '#14532d' },
-  icpc: { background: 'rgba(253, 224, 71, 0.6)', text: '#713f12' },
-  chill: { background: 'rgba(216, 180, 254, 0.6)', text: '#581c87' },
-  closing: { background: 'rgba(252, 165, 165, 0.6)', text: '#7f1d1d' },
-  default: { background: 'rgba(243, 244, 246, 0.6)', text: '#111827' },
+  registration: { background: 'var(--st-color-registration, rgba(147, 197, 253, 0.6))', text: 'var(--st-text-registration, #1e3a8a)' },
+  opening: { background: 'var(--st-color-opening, rgba(244, 114, 182, 0.6))', text: 'var(--st-text-opening, #831843)' },
+  theory: { background: 'var(--st-color-theory, rgba(254, 215, 170, 0.6))', text: 'var(--st-text-theory, #9a3412)' },
+  break: { background: 'var(--st-color-break, rgba(191, 219, 254, 0.6))', text: 'var(--st-text-break, #1e3a8a)' },
+  contest: { background: 'var(--st-color-contest, rgba(249, 168, 212, 0.6))', text: 'var(--st-text-contest, #831843)' },
+  upsolving: { background: 'var(--st-color-upsolving, rgba(187, 247, 208, 0.6))', text: 'var(--st-text-upsolving, #14532d)' },
+  icpc: { background: 'var(--st-color-icpc, rgba(253, 224, 71, 0.6))', text: 'var(--st-text-icpc, #713f12)' },
+  chill: { background: 'var(--st-color-chill, rgba(216, 180, 254, 0.6))', text: 'var(--st-text-chill, #581c87)' },
+  closing: { background: 'var(--st-color-closing, rgba(252, 165, 165, 0.6))', text: 'var(--st-text-closing, #7f1d1d)' },
+  default: { background: 'var(--st-color-default, rgba(243, 244, 246, 0.6))', text: 'var(--st-text-default, #111827)' },
 };
 
 export function renderTimeline(container: HTMLElement, props: TimelineRenderProps): TimelineInstance {

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ScheduleTimeline } from '../ScheduleTimeline';
-import { Event } from '../types';
+import type { Event } from '@demmarl/schedule-timeline-core';
 
 describe('ScheduleTimeline', () => {
   // Test new event format
@@ -68,8 +68,8 @@ describe('ScheduleTimeline', () => {
 
   it('renders without crashing with events', () => {
     render(<ScheduleTimeline events={mockEvents} />);
-    expect(screen.getByText('Wednesday 20')).toBeInTheDocument();
     expect(screen.getByText('Thursday 21')).toBeInTheDocument();
+    expect(screen.getByText('Friday 22')).toBeInTheDocument();
   });
 
   it('renders without crashing with schedule (legacy)', () => {

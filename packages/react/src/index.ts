@@ -2,18 +2,18 @@
 export { ScheduleTimeline } from './ScheduleTimeline';
 
 // Type exports
-export type {
+export type { // These now come from the core package
   Activity,
   Event,
   DaySchedule,
   TimelineConfig,
   ColorTheme,
-  ScheduleTimelineProps,
   TimeMarker,
-} from './types';
+} from '@demmarl/schedule-timeline-core';
+export type { ScheduleTimelineProps } from './types';
 
 // Event utilities
-export { eventsToSchedule, createEvent, createDayEvents } from './utils/eventUtils';
+export { eventsToSchedule, createEvent, createDayEvents } from '@demmarl/schedule-timeline-core';
 
 // ICS utilities (calendar standard)
 export { eventsToICS, icsToEvents, downloadICS, loadICSFile } from '@demmarl/schedule-timeline-core/ics';
@@ -23,8 +23,8 @@ export const createActivity = (
   time: string,
   title: string,
   type?: string,
-  options?: Partial<Pick<import('./types').Activity, 'id' | 'description' | 'color' | 'textColor'>>
-): import('./types').Activity => ({
+  options?: Partial<Pick<import('@demmarl/schedule-timeline-core').Activity, 'id' | 'description' | 'color' | 'textColor'>>
+): import('@demmarl/schedule-timeline-core').Activity => ({
   time,
   title,
   type,
@@ -35,8 +35,8 @@ export const createDaySchedule = (
   date: string,
   day: string,
   dayName: string,
-  activities: import('./types').Activity[]
-): import('./types').DaySchedule => ({
+  activities: import('@demmarl/schedule-timeline-core').Activity[]
+): import('@demmarl/schedule-timeline-core').DaySchedule => ({
   date,
   day,
   dayName,

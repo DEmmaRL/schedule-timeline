@@ -49,6 +49,14 @@
     "./ics": {
       "import": "./dist/ics.esm.js",
       "require": "./dist/ics.js"
+    },
+    "./web-component": {
+      "import": "./dist/web-component.esm.js",
+      "require": "./dist/web-component.js"
     }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
   }
 }

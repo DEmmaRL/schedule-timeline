@@ -55,4 +55,30 @@ export default [
     ],
     external: ['tslib'],
   },
+  {
+    input: 'src/web-component.ts',
+    output: [
+      {
+        file: 'dist/web-component.js',
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: 'dist/web-component.esm.js',
+        format: 'esm',
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      resolve({
+        browser: true,
+      }),
+      commonjs(),
+      typescript({
+        tsconfig: './tsconfig.json',
+        importHelpers: true,
+      }),
+    ],
+    external: ['tslib'],
+  },
 ];

@@ -1,6 +1,8 @@
 import { Activity, ColorTheme, DaySchedule, Event, TimelineConfig, TimeMarker } from './types';
 import { eventsToSchedule } from './eventUtils';
 
+type StyleLike = Record<string, string | number>;
+
 export interface TimelineRenderProps {
   schedule?: DaySchedule[];
   events?: Event[];
@@ -11,6 +13,8 @@ export interface TimelineRenderProps {
   onActivityHover?: (activity: Activity, dayIndex: number) => void;
   onEventClick?: (event: Event) => void;
   onEventHover?: (event: Event) => void;
+  renderActivityMarkup?: (activity: Activity, style: StyleLike) => string | null | undefined;
+  renderEventMarkup?: (event: Event, style: StyleLike) => string | null | undefined;
   showHeader?: boolean;
   headerClassName?: string;
   activityClassName?: string;
@@ -134,6 +138,7 @@ function createTimeColumn(
 
   const header = document.createElement('div');
   header.textContent = 'Time';
+  header.className = headerClassName || '';
   header.style.cssText = [
     'background: rgba(229, 231, 235, 0.9)',
     'padding: 12px',
@@ -144,7 +149,6 @@ function createTimeColumn(
     'display: flex',
     'align-items: center',
     'justify-content: center',
-    headerClassName || '',
   ].filter(Boolean).join('; ');
   column.appendChild(header);
 
@@ -184,6 +188,7 @@ function createDayColumn(
   if (props.showHeader !== false) {
     const header = document.createElement('div');
     header.textContent = `${daySchedule.dayName} ${daySchedule.day}`;
+    header.className = props.headerClassName || '';
     header.style.cssText = [
       'background: rgba(229, 231, 235, 0.3)',
       'padding: 12px',
@@ -194,7 +199,6 @@ function createDayColumn(
       'display: flex',
       'align-items: center',
       'justify-content: center',
-      props.headerClassName || '',
     ].filter(Boolean).join('; ');
     column.appendChild(header);
   }
@@ -210,6 +214,7 @@ function createDayColumn(
     const originalEvent = eventMap.get(eventKey);
 
     const card = document.createElement('div');
+    card.className = props.activityClassName || '';
     card.style.cssText = [
       'position: absolute',
       'left: 0',
@@ -227,7 +232,6 @@ function createDayColumn(
       'transition: box-shadow 150ms ease',
       `background: ${style.background}`,
       `color: ${style.text}`,
-      props.activityClassName || '',
     ].filter(Boolean).join('; ');
 
     card.addEventListener('click', () => {
@@ -249,6 +253,17 @@ function createDayColumn(
     });
 
     const content = document.createElement('div');
+    const customMarkup = originalEvent
+      ? props.renderEventMarkup?.(originalEvent, { top, height, margin: 2 })
+      : props.renderActivityMarkup?.(activity, { top, height, margin: 2 });
+
+    if (customMarkup) {
+      content.innerHTML = customMarkup;
+      card.appendChild(content);
+      column.appendChild(card);
+      return;
+    }
+
     content.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; text-align: center;';
 
     const time = document.createElement('div');

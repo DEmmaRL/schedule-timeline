@@ -85,10 +85,10 @@ const App = () => {
 
   const customTheme = {
     ...colorThemes.minimal,
-    workshop: { background: 'bg-indigo-200', text: 'text-indigo-900' },
-    networking: { background: 'bg-emerald-200', text: 'text-emerald-900' },
-    keynote: { background: 'bg-purple-200', text: 'text-purple-900' },
-    panel: { background: 'bg-orange-200', text: 'text-orange-900' },
+    workshop: { background: '#c7d2fe', text: '#312e81' },
+    networking: { background: '#a7f3d0', text: '#064e3b' },
+    keynote: { background: '#e9d5ff', text: '#4c1d95' },
+    panel: { background: '#fed7aa', text: '#7c2d12' },
   };
 
   return (

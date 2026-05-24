@@ -16,7 +16,7 @@ export type {
 export { eventsToSchedule, createEvent, createDayEvents } from './utils/eventUtils';
 
 // ICS utilities (calendar standard)
-export { eventsToICS, icsToEvents, downloadICS, loadICSFile } from './utils/icsUtils';
+export { eventsToICS, icsToEvents, downloadICS, loadICSFile } from '@demmarl/schedule-timeline-core/ics';
 
 // Utility functions that users might find helpful (backward compatibility)
 export const createActivity = (

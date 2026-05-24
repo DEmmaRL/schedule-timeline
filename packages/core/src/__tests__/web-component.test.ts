@@ -1,4 +1,7 @@
 import '../web-component';
+import { registerScheduleTimelineElement } from '../web-component';
+
+registerScheduleTimelineElement();
 
 describe('ScheduleTimelineElement', () => {
   it('renders from the events attribute', () => {

@@ -15,10 +15,11 @@
     <h1>Schedule Timeline — Astro example</h1>
 
     <h2>1) Web Component (zero framework)</h2>
-    <p>Import the web-component module on the client and use the custom element directly.</p>
+    <p>Import the web-component module on the client, then register the element once.</p>
     <script type="module">
-      // This import registers <schedule-timeline> (auto-registering build)
-      import '@demmarl/schedule-timeline-core/web-component';
+      import { registerScheduleTimelineElement } from '@demmarl/schedule-timeline-core/web-component';
+
+      registerScheduleTimelineElement();
     </script>
 
     <schedule-timeline

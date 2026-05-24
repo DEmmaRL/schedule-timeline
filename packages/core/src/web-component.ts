@@ -89,5 +89,3 @@ export function registerScheduleTimelineElement(): void {
     customElements.define('schedule-timeline', ScheduleTimelineElement);
   }
 }
-
-registerScheduleTimelineElement();

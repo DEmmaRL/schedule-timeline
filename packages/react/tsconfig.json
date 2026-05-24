@@ -10,12 +10,16 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@demmarl/schedule-timeline-core": ["../core/src/index.ts"],
+      "@demmarl/schedule-timeline-core/ics": ["../core/src/ics.ts"]
+    },
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
+    "noEmit": true,
     "jsx": "react-jsx",
     "declaration": true,
-    "outDir": "dist",
     "declarationDir": "dist"
   },
   "include": [
@@ -26,5 +30,8 @@
     "dist",
     "**/*.test.ts",
     "**/*.test.tsx"
+  ],
+  "references": [
+    { "path": "../core" }
   ]
 }
